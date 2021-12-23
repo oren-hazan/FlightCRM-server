@@ -5,6 +5,7 @@ countries_dao= require('../dao/countries_dao')
     try {
         const res = await countries_dao.delete_and_reset_countries()
         console.log(res.rows)
+        return res.rows;
     } catch (e) {
         console.log(e.message)
     }
@@ -14,6 +15,7 @@ deleteCountry = async(_id) => {
     try {
         const res = await countries_dao.delete_country(_id)
         console.log(res.rows)
+        return res.rows;
     } catch (e) {
         console.log(e.message)
     }
@@ -23,6 +25,7 @@ allCountries = async() => {
     try {
         const res = await countries_dao.get_all_countries()
         console.log(res.rows)
+        return res.rows
     } catch (e) {
         console.log(e.message)
     }
@@ -32,6 +35,7 @@ countryById = async(_id) => {
     try {
         const res = await countries_dao.get_country_by_id(_id)
         console.log(res.rows)
+        return res.rows;
     } catch (e) {
         console.log(e.message)
     }
@@ -42,6 +46,7 @@ updateCountries = async(params) => {
     try {
         const res = await countries_dao.update_countries(_id, _name)
         console.log(res.rows)
+        return res.rows;
     } catch (e) {
         console.log(e.message)
     }

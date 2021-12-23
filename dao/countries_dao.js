@@ -43,7 +43,7 @@ const get_country_by_id = async (_id) => {
 // update countries
 const update_countries = async (_id, _name) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_update_countries(${_id}, ${_name})`)
+        const result = await rawRepo.getRowResult(`select * from sp_update_countries(${_id}, '${_name}')`)
         return result;
     }   catch (e) {
         console.log(e.message);

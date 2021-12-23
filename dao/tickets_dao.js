@@ -14,7 +14,7 @@ const delete_and_reset_tickets = async () => {
 const delete_ticket = async (_id) => {
     try {
         const result = await rawRepo.getRowResult(`select * from sp_delete_ticket(${_id})`)
-        return result;
+        return result.rows[0].sp_delete_ticket;
     }   catch (e) {
         console.log(e.message);
     }
@@ -53,7 +53,7 @@ const get_ticket_by_id = async (_id) => {
 // get tickets by customer
 const get_ticket_by_customer = async (_customer_id) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_get_ticket_by_customer(${_customer_id})`)
+        const result = await rawRepo.getRowResult(`select * from sp_get_tickets_by_customer(${_customer_id})`)
         return result;
     }   catch (e) {
         console.log(e.message);
@@ -70,11 +70,11 @@ const update_tickets = async (_id, _flight_id, _customer_id) => {
     }
    }
 
-// upsert tickets
-const upsert_tickets = async (_flight_id, _customer_id) => {
+// insert tickets
+const insert_tickets = async (_flight_id, _customer_id) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_upsert_tickets(${_flight_id}, ${_customer_id})`)
-        return result;
+        const result = await rawRepo.getRowResult(`select * from sp_insert_ticket(${_flight_id}, ${_customer_id})`)
+        return result.rows[0].sp_insert_ticket;
     }   catch (e) {
         console.log(e.message);
     }
@@ -88,5 +88,5 @@ const upsert_tickets = async (_flight_id, _customer_id) => {
        get_ticket_by_customer,
        get_ticket_by_id,
        update_tickets,
-       upsert_tickets
+       insert_tickets
    }

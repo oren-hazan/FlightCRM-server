@@ -24,7 +24,7 @@ const delete_and_reset_flights = async () => {
 const delete_flight = async (_id) => {
     try {
         const result = await rawRepo.getRowResult(`select * from sp_delete_flight(${_id})`)
-        return result;
+        return result.rows[0].sp_delete_flight;
     }   catch (e) {
         console.log(e.message);
     }
@@ -63,7 +63,7 @@ const get_flight_by_id = async (_id) => {
 // get flights by airline id
 const get_flight_by_airline_id = async (_airline_id) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_get_flight_by_airline_id(${_airline_id})`)
+        const result = await rawRepo.getRowResult(`select * from sp_get_flights_by_airline_id(${_airline_id})`)
         return result;
     }   catch (e) {
         console.log(e.message);
@@ -73,7 +73,7 @@ const get_flight_by_airline_id = async (_airline_id) => {
 // get flight by parameters
 const get_flights_by_parameters = async (_origin_country_id, _destination_country_id, _date) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_get_flights_by_parameters(${_origin_country_id}, ${_destination_country_id}, ${_date})`)
+        const result = await rawRepo.getRowResult(`select * from sp_get_flights_by_parameters('${_origin_country_id}', '${_destination_country_id}', '${_date}')`)
         return result;
     }   catch (e) {
         console.log(e.message);
@@ -83,18 +83,18 @@ const get_flights_by_parameters = async (_origin_country_id, _destination_countr
 // update flights
 const update_flights = async (_id, _airline_id, _origin_country_id, _destination_country_id, _departure_time, _landing_time, _remaining_tickets) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_update_flights(${_id}, ${_airline_id}, ${_origin_country_id}, ${_destination_country_id}, ${_departure_time}, ${_landing_time}, ${_remaining_tickets})`)
-        return result;
+        const result = await rawRepo.getRowResult(`select * from sp_update_flights(${_id}, ${_airline_id}, ${_origin_country_id}, ${_destination_country_id}, '${_departure_time}', '${_landing_time}', ${_remaining_tickets})`)
+        return result.rows[0].sp_update_flights;
     }   catch (e) {
         console.log(e.message);
     }
    }
 
-// upsert flights
-const upsert_flights = async (_airline_id, _origin_country_id, _destination_country_id, _departure_time, _landing_time, _remaining_tickets) => {
+// insert flights
+const insert_flights = async (_airline_id, _origin_country_id, _destination_country_id, _departure_time, _landing_time, _remaining_tickets) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_upsert_flights(${_airline_id}, ${_origin_country_id}, ${_destination_country_id}, ${_departure_time}, ${_landing_time}, ${_remaining_tickets})`)
-        return result;
+        const result = await rawRepo.getRowResult(`select * from sp_insert_flights(${_airline_id}, ${_origin_country_id}, ${_destination_country_id}, '${_departure_time}', '${_landing_time}', ${_remaining_tickets})`)
+        return result.rows[0].sp_insert_flights;
     }   catch (e) {
         console.log(e.message);
     }
@@ -110,5 +110,5 @@ const upsert_flights = async (_airline_id, _origin_country_id, _destination_coun
     get_flight_by_id,
     get_flights_by_parameters, 
     update_flights,
-    upsert_flights
+    insert_flights
    }

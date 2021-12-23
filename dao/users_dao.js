@@ -43,8 +43,8 @@ const get_user_by_id = async (_id) => {
 // get user by username
 const get_user_by_username = async (_username) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_get_user_by_username(${_username})`)
-        return result;
+        const result = await rawRepo.getRowResult(`select * from sp_get_user_by_username('${_username}')`)
+        return result.rows[0];
     }   catch (e) {
         console.log(e.message);
     }
@@ -53,18 +53,28 @@ const get_user_by_username = async (_username) => {
 // update users
 const update_users = async (_id, _username, _password, _email) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_update_users(${_id}, ${_username}, ${_password}, ${_email})`)
-        return result;
+        const result = await rawRepo.getRowResult(`select * from sp_update_users(${_id}, '${_username}', '${_password}', '${_email}')`)
+        return result.rows[0].sp_update_users;
     }   catch (e) {
         console.log(e.message);
     }
    }
 
-// upsert users
-const upsert_users = async (_username, _password, _email) => {
+// insert users
+const insert_users = async (_username, _password, _email, _rule) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_upsert_users(${_username}, ${_password}, ${_email})`)
-        return result;
+        const result = await rawRepo.getRowResult(`select * from sp_insert_user('${_username}', '${_password}', '${_email}', '${_rule}')`);
+        return result.rows[0].sp_insert_user;
+    }   catch (e) {
+        console.log(e.message);
+    }
+   }
+
+   // signup users
+const signup_user = async (_username, _password, _email) => {
+    try {
+        const result = await rawRepo.getRowResult(`select * from sp_signup_user('${_username}', '${_password}', '${_email}')`);
+        return result.rows[0].sp_signup_user;
     }   catch (e) {
         console.log(e.message);
     }
@@ -77,5 +87,6 @@ const upsert_users = async (_username, _password, _email) => {
        get_user_by_id,
        get_user_by_username,
        update_users,
-       upsert_users
+       insert_users,
+       signup_user
    }

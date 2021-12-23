@@ -13,7 +13,12 @@ const userSchema = new mongoose.Schema({
 
     params: {
         type:[String],
-        }
+        }, 
+
+    timestamp: {
+      type: Date,
+      default: Date.now
+    }
   
   });
 

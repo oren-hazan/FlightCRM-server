@@ -3,7 +3,7 @@ const CreateAction = require("../data/clientAction");
 
 const trx_keeper=async (url,fnName,params)=>{
 
-  const action = await CreateAction.create({url,fnName,params});
+  const action = await CreateAction.create({url,fnName,params, timestamp: new Date()});
   return action;
   
 };

@@ -5,6 +5,7 @@ tickets_dao= require('../dao/tickets_dao')
     try {
         const res = await tickets_dao.delete_and_reset_tickets()
         console.log(res.rows)
+        return res.rows;
     } catch (e) {
         console.log(e.message)
     }
@@ -13,7 +14,8 @@ tickets_dao= require('../dao/tickets_dao')
 deleteTicket = async(_id) => {
     try {
         const res = await tickets_dao.delete_ticket(_id)
-        console.log(res.rows)
+        console.log(res)
+        return res;
     } catch (e) {
         console.log(e.message)
     }
@@ -23,6 +25,7 @@ allTickets = async() => {
     try {
         const res = await tickets_dao.get_all_tickets()
         console.log(res.rows)
+        return res.rows;
     } catch (e) {
         console.log(e.message)
     }
@@ -32,6 +35,7 @@ allTicketsJoin = async() => {
     try {
         const res = await tickets_dao.get_all_tickets_join()
         console.log(res.rows)
+        return res.rows;
     } catch (e) {
         console.log(e.message)
     }
@@ -41,6 +45,7 @@ ticketByCustomer = async(_customer_id) => {
     try {
         const res = await tickets_dao.get_ticket_by_customer(_customer_id)
         console.log(res.rows)
+        return res.rows;
     } catch (e) {
         console.log(e.message)
     }
@@ -50,6 +55,7 @@ ticketById = async(_id) => {
     try {
         const res = await tickets_dao.get_ticket_by_id(_id)
         console.log(res.rows)
+        return res.rows;
     } catch (e) {
         console.log(e.message)
     }
@@ -60,16 +66,18 @@ updateTickets = async(params) => {
     try {
         const res = await tickets_dao.update_tickets(_id, _flight_id, _customer_id)
         console.log(res.rows)
+        return res.rows;
     } catch (e) {
         console.log(e.message)
     }
 }
 
-upsertTickets = async(params) => {
+insertTickets = async(params) => {
     const {_flight_id, _customer_id} = params
     try {
-        const res = await tickets_dao.upsert_tickets(_flight_id, _customer_id)
-        console.log(res.rows)
+        const res = await tickets_dao.insert_tickets(_flight_id, _customer_id)
+        console.log(res)
+        return res;
     } catch (e) {
         console.log(e.message)
     }
@@ -84,5 +92,5 @@ module.exports = {
     ticketByCustomer,
     ticketById,
     updateTickets,
-    upsertTickets
+    insertTickets
 }

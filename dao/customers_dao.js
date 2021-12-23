@@ -14,7 +14,7 @@ const delete_and_reset_customers = async () => {
 const delete_customers_cascade = async (_user_id) => {
     try {
         const result = await rawRepo.getRowResult(`select * from sp_delete_customers_cascade(${_user_id})`)
-        return result;
+        return result.rows[0].sp_delete_customers_cascade;
     }   catch (e) {
         console.log(e.message);
     }
@@ -43,7 +43,7 @@ const get_all_customers_join = async () => {
 // get customer by id
 const get_customer_by_id = async (_id) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_get_customer_by_id()`)
+        const result = await rawRepo.getRowResult(`select * from sp_get_customer_by_id(${_id})`)
         return result;
     }   catch (e) {
         console.log(e.message);
@@ -63,7 +63,7 @@ const get_customer_by_username_setoff_airline = async (_id) => {
 // get customer by username
 const get_customer_by_username = async (_user_name) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_get_customer_by_username(${_user_name})`)
+        const result = await rawRepo.getRowResult(`select * from sp_get_customer_by_username('${_user_name}')`)
         return result;
     }   catch (e) {
         console.log(e.message);
@@ -73,18 +73,18 @@ const get_customer_by_username = async (_user_name) => {
 // update customers
 const update_customers = async (_id, _first_name, _last_name, _address, _phone_no, _credit_card_no, _user_id) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_update_customers(${_id}, ${_first_name}, ${_last_name}, ${_address}, ${_phone_no}, ${_credit_card_no}, ${_user_id})`)
-        return result;
+        const result = await rawRepo.getRowResult(`select * from sp_update_customers(${_id}, '${_first_name}', '${_last_name}', '${_address}', '${_phone_no}', '${_credit_card_no}', '${_user_id}')`)
+        return "update customer " + result.rows[0].sp_update_customers + " success";
     }   catch (e) {
-        console.log(e.message);
+        console.log(e.message);  
     }
    }
 
 // upsert customer
-const upsert_customer = async (_first_name, _last_name, _address, _phone_no, _credit_card_no, _user_id) => {
+const insert_customer = async (_first_name, _last_name, _address, _phone_no, _credit_card_no, _user_id) => {
     try {
-        const result = await rawRepo.getRowResult(`select * from sp_upsert_customer(${_first_name}, ${_last_name}, ${_address}, ${_phone_no},${_address}, ${_phone_no}, ${_credit_card_no}, ${_user_id})`)
-        return result;
+        const result = await rawRepo.getRowResult(`select * from sp_insert_customer('${_first_name}', '${_last_name}', '${_address}', '${_phone_no}', '${_credit_card_no}', ${_user_id})`)
+        return result.rows[0].sp_insert_customer;
     }   catch (e) {
         console.log(e.message);
     }
@@ -99,6 +99,6 @@ get_customer_by_id,
 get_customer_by_username,
 get_customer_by_username_setoff_airline,
 update_customers,
-upsert_customer
+insert_customer
    }
 

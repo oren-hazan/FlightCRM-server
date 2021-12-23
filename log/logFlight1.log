@@ -1,6 +1,0 @@
-{
-  level: 'error',
-  message: 'error get_all_flights: flight_bl.AllFlights is not a function',
-  label: 'testing mode',
-  timestamp: '2021-12-16T09:44:00.786Z'
-}

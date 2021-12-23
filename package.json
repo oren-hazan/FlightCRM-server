@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:anon": "mocha ./tests/anon_test",
     "start": "nodemon app"
   },
   "keywords": [],
@@ -12,6 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "chai": "^4.3.4",
+    "config": "^3.3.6",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.14",
